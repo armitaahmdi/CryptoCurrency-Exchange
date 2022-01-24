@@ -5,10 +5,12 @@ import { getCoin } from '../services/api';
 
 // Components
 import Loader from './Loader';
+import Coin from './Coin'
 
 const Landing = () => {
 
     const [coins, setCoins] = useState([]);
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
         const fetchAPI = async () => {
@@ -20,14 +22,33 @@ const Landing = () => {
         fetchAPI();
     }, [])
 
+    const searchHandler = (event) => {
+        setSearch(event.target.value)
+    }
+
+    // toLoweCase baraye inke javascript be horof hasase age to search masalan bit bznim onai ke Bit hast ro nmiare
+    const searchCoins = coins.filter(coin => coin.name.toLowerCase().includes(search.toLowerCase()))
+
     return (
         <>
-            <input type='search' placeholder='Search' />
+            <input type='search'
+                placeholder='Search'
+                value={search}
+                onChange={searchHandler}
+            />
             {
                 coins.length ?
                     <div>
                         {
-                            coins.map(coin => <p key={coin.id}> {coin.id} </p>)
+                            searchCoins.map(coin => <Coin
+                                key={coin.id}
+                                name={coin.id}
+                                image={coin.image}
+                                symbol={coin.symbol}
+                                price={coin.current_price}
+                                marketCap={coin.market_cap}
+                                priceChange={coin.market_cap_change_24h}
+                            />)
                         }
                     </div>
                     :
