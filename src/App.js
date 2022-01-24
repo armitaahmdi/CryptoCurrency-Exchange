@@ -1,11 +1,11 @@
-import React from 'react';
+import './App.css'
 
 // Components
 import Landing from './components/Landing';
 
 const App = () => {
   return (
-    <div>
+    <div className="App">
       <Landing />
     </div>
   );
